@@ -1,0 +1,150 @@
+﻿
+@model MultimediaProject.Models.Lzw;
+@{
+	Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<title>@ViewData["title"] </title>
+
+	<!-- Custom fonts for this template-->
+	<link href="/Asset/Admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+		  rel="stylesheet">
+
+	<!-- Custom styles for this template-->
+	<link href="/Asset/Admin/css/sb-admin-2.min.css" rel="stylesheet">
+	<style>
+		body {
+			font-family: Arial;
+		}
+
+		/* Style the tab */
+		.tab {
+			overflow: hidden;
+			border: 1px solid #ccc;
+			background-color: #f1f1f1;
+		}
+
+			/* Style the buttons inside the tab */
+			.tab button {
+				background-color: inherit;
+				float: left;
+				border: none;
+				outline: none;
+				cursor: pointer;
+				padding: 14px 16px;
+				transition: 0.3s;
+				font-size: 17px;
+			}
+
+				/* Change background color of buttons on hover */
+				.tab button:hover {
+					background-color: #ddd;
+				}
+
+				/* Create an active/current tablink class */
+				.tab button.active {
+					background-color: #ccc;
+				}
+
+		/* Style the tab content */
+		.tabcontent {
+			display: none;
+			padding: 6px 12px;
+			border: 1px solid #ccc;
+			border-top: none;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="tab">
+		<button class="tablinks" onclick="openCity(event, 'Encode')">Encode</button>
+		<button class="tablinks" onclick="openCity(event, 'Decrypt')">Decrypt</button>
+	</div>
+
+	<div id="Encode" class="tabcontent">
+		<form asp-area="Admin" asp-controller="Home" asp-action="EncodeLZW" method="post" class="user" enctype="multipart/form-data">
+			<div class="form-group">
+				<label asp-for="File" class="control-label myDIV"></label>
+				<div class="hide">Click File</div>
+				<div class="custom-file">
+					<input asp-for="File" name="input" type="file" class="form-control custom-file-input" />
+				</div>
+			</div>
+			<hr>
+			<button type="submit">EncodeLZW</button>
+			<hr>
+		</form>
+		<textarea rows="50" cols="150" name="input">@ViewData["inputEncodeLZW"]</textarea>
+		<textarea rows="50" cols="150" name="output">@ViewData["outputEncodeLZW"]</textarea>
+	</div>
+
+	<div id="Decrypt" class="tabcontent">
+		<form asp-area="Admin" asp-controller="Home" asp-action="DecryptLZW" method="post" class="user" enctype="multipart/form-data">
+			<div class="form-group">
+				<label asp-for="File" class="control-label myDIV"></label>
+				<div class="hide">Click File</div>
+				<div class="custom-file">
+					<input asp-for="File" name="input" type="file" class="form-control custom-file-input" />
+				</div>
+			</div>
+			<hr>
+			<button type="submit">DecryptLZW</button>
+			<hr>
+		</form>
+
+		<textarea rows="50" cols="150" name="input">@ViewData["inputDecryptLZW"]</textarea>
+		<textarea rows="50" cols="150" name="output">@ViewData["outputDecryptLZW"]</textarea>
+	</div>
+
+	
+
+	<script>
+		function openCity(evt, cityName) {
+			var i, tabcontent, tablinks;
+			tabcontent = document.getElementsByClassName("tabcontent");
+			for (i = 0; i < tabcontent.length; i++) {
+				tabcontent[i].style.display = "none";
+			}
+			tablinks = document.getElementsByClassName("tablinks");
+			for (i = 0; i < tablinks.length; i++) {
+				tablinks[i].className = tablinks[i].className.replace(" active", "");
+			}
+			document.getElementById(cityName).style.display = "block";
+			evt.currentTarget.className += " active";
+		}
+	</script>
+
+	<!-- Bootstrap core JavaScript-->
+	<script src="/Asset/Admin/vendor/jquery/jquery.min.js"></script>
+	<script src="/Asset/Admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+	<!-- Core plugin JavaScript-->
+	<script src="/Asset/Admin/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+	<!-- Custom scripts for all pages-->
+	<script src="/Asset/Admin/js/sb-admin-2.min.js"></script>
+
+</body>
+
+</html>
+<script type="text/javascript">
+	if (ViewData["ResultLogin"] != null) {
+		document.getElementById("ResultLogin").innerHTML = ViewData["ResultLogin"];
+	}
+	else {
+		document.getElementById("ResultLogin").innerHTML = "";
+	}
+</script>

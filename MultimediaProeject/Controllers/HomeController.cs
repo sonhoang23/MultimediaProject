@@ -23,12 +23,7 @@ namespace MultimediaProject.Controllers
             _iLZWService = iLZWService;
         }
         [HttpGet]
-        public ActionResult Home()
-        {
-            return View();
-        }
-        [HttpGet]
-        public IActionResult LZW()
+        public IActionResult LZW()   //hàm show ra html
         {
             ViewData["Title"] = "LZW";
             return View();
@@ -38,13 +33,13 @@ namespace MultimediaProject.Controllers
         {
             if (input != null)
             {
-                List<String> encodeLZW = _iLZWService.EncodeLZW(input);
+                List<String> encodeLZW = _iLZWService.EncodeLZW(input); //mã hóa
                 ViewData["outputEncodeLZW"] = encodeLZW[0];
-                ViewData["inputEncodeLZW"] = encodeLZW[1];
-                String path = @"C:\Users\son\Desktop\multil\FileDe.txt";
+                ViewData["inputEncodeLZW"] = encodeLZW[1];                //show ra view
 
-
-                using (StreamWriter writetext = new StreamWriter(path))
+                
+                String path = @"C:\Users\son\Desktop\multil\FileDe.txt"; // đường dẫn ra file mã hóa
+                using (StreamWriter writetext = new StreamWriter(path))   //để ghi mã ra file text
                 {
                     writetext.WriteLine(encodeLZW[0]);
                 }

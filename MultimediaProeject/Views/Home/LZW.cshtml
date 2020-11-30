@@ -87,9 +87,12 @@
 			<button type="submit">EncodeLZW</button>
 			<hr>
 		</form>
-		<textarea rows="50" cols="150" name="input">@ViewData["inputEncodeLZW"]</textarea>
-		<textarea rows="50" cols="150" name="output">@ViewData["outputEncodeLZW"]</textarea>
+		<p>String in Text File</p>
+		<textarea readonly style="width:100%; height:25vh"  name="input">@ViewData["inputEncodeLZW"]</textarea>
+		<p>Decripted String</p>
+		<textarea readonly style="width:100%; height:25vh" name="output">@ViewData["outputEncodeLZW"]</textarea>
 	</div>
+	
 
 	<div id="Decrypt" class="tabcontent">
 		<form asp-area="Admin" asp-controller="Home" asp-action="DecryptLZW" method="post" class="user" enctype="multipart/form-data">
@@ -103,13 +106,15 @@
 			<hr>
 			<button type="submit">DecryptLZW</button>
 			<hr>
-		</form>
-
-		<textarea rows="50" cols="150" name="input">@ViewData["inputDecryptLZW"]</textarea>
-		<textarea rows="50" cols="150" name="output">@ViewData["outputDecryptLZW"]</textarea>
+		</form>	 
+		<p>String in Text File</p>
+		<textarea readonly style="width:100%; height:25vh"  name="input">@ViewData["inputDecryptLZW"]</textarea>
+		<p>Encoded String</p>
+		<textarea readonly style="width:100%; height:25vh"  name="output">@ViewData["outputDecryptLZW"]</textarea>
 	</div>
-
 	
+
+
 
 	<script>
 		function openCity(evt, cityName) {

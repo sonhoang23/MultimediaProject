@@ -23,9 +23,9 @@ namespace MultimediaProject.Services.LZW
             String w = "";       //bộ đệm chứa
             String k = "";       //đầu vào
             Dictionary<String, String> dictionary = new Dictionary<String, String>();// từ điển
-            bool bufferFirst = false; //nhận biết đã đọc lí tự đầu tiên chưa
+            bool bufferFirst = true; //nhận biết đã đọc lí tự đầu tiên chưa
             char[] b = new char[inputString.Length]; //mảng lưu string
-            int numberOfCode = 256; //code
+            int code = 256; //code
             using (StringReader sr = new StringReader(inputString))
             {
                 sr.Read(b, 0, inputString.Length);   //chuyển stringinput sang mảng b để xử lý
@@ -42,10 +42,10 @@ namespace MultimediaProject.Services.LZW
                     {
                         k = b[i].ToString();    //đọc từ mảng b sang string k
                     }
-                    if (bufferFirst == false)  //nhận biết đây có phải kí tự đầu tiên không
+                    if (bufferFirst == true)  //nhận biết đây có phải kí tự đầu tiên không
                     {
                         //  output.Add(k);
-                        bufferFirst = true;
+                        bufferFirst = false;
                         w = k;
                         continue;
                     }
@@ -54,30 +54,30 @@ namespace MultimediaProject.Services.LZW
                     if (dictionary.ContainsKey(wk))  //dòng 5
                     {
                         w = wk;   //dòng 6
-                        if (i == b.Length - 1)   //check có phải kí tự cuối không
+                        if (i == b.Length - 1) //check có phải kí tự cuối không
                         {
                             output.Add(w);
                         }
                     }
                     else  //(dòng 7)
                     {
-                        dictionary.Add(wk, "[" + numberOfCode.ToString() + "]"); //(dòng 8)  //add wk vào từ điển
-                        numberOfCode++;             //tăng code lên để dùng cho trường hợp tiếp
+                        dictionary.Add(wk, "[" + code.ToString() + "]"); //(dòng 8)  //add wk vào từ điển
+                        code++;             //tăng code lên để dùng cho trường hợp tiếp
                         if (w.Length == 1 || w == "\r\n")    // (dòng 9)
                         {
-                            output.Add(w);               //dòng 10
+                            output.Add(w); //dòng 10
                         }
-                        else                            //dòng 11
+                        else //dòng 11
                         {
                             output.Add(dictionary.GetValueOrDefault(w)); //dòng 12
                         }
 
                         w = k;  //dòng 13
-                        if (i == b.Length - 1)   //check có phải kí tự cuối không
+                        if (i == b.Length - 1)//check có phải kí tự cuối không
                         {
                             output.Add(w);
                         }
-                        continue;    //tiếp tục chạy vòng lặp
+                        continue;//tiếp tục chạy vòng lặp
 
                     }
                 }
@@ -111,7 +111,7 @@ namespace MultimediaProject.Services.LZW
                 String k = "";  //characterInput
                 char[] b = new char[inputString.Length]; //mảng ký tự lưu các kí tự trong inputString
                 bool characterFirst = false;
-                int numberOfCode = 256;
+                int code = 256;
                 Dictionary<String, String> dictionaryCharacter = new Dictionary<string, string>();
                 /*----------------------------------------------------*/
                 using (StringReader sr = new StringReader(inputString))
@@ -133,7 +133,6 @@ namespace MultimediaProject.Services.LZW
                         }
                         if (characterFirst == false)
                         {
-
                             output.Add(k);
                             w = k;
                             characterFirst = true;
@@ -146,13 +145,13 @@ namespace MultimediaProject.Services.LZW
                             output.Add(entry);      //dòng 6
                             if (entry == "\r\n")  //check entry có phải cụm kí tự \r\n không
                             {
-                                dictionaryCharacter.Add("[" + numberOfCode.ToString() + "]", w + entry.Substring(0, 2)); //dòng 7 trường hợp là cụm kí tự \r\n
+                                dictionaryCharacter.Add("[" + code.ToString() + "]", w + entry.Substring(0, 2)); //dòng 7 trường hợp là cụm kí tự \r\n
                             }
                             else
                             {
-                                dictionaryCharacter.Add("[" + numberOfCode.ToString() + "]", w + entry.Substring(0, 1)); //dòng 7 trường hợp không là cụm kí tự \r\n
+                                dictionaryCharacter.Add("[" + code.ToString() + "]", w + entry.Substring(0, 1)); //dòng 7 trường hợp không là cụm kí tự \r\n
                             }
-                            numberOfCode++;    //tăng code lên dùng cho lần sau
+                            code++;    //tăng code lên dùng cho lần sau
                             w = entry;        //dòng 8
                             continue; //tiếp tục vòng lặp
                         }
@@ -170,13 +169,13 @@ namespace MultimediaProject.Services.LZW
                                         output.Add(entry);   //dòng 6
                                         if (entry == "\r\n")
                                         {
-                                            dictionaryCharacter.Add("[" + numberOfCode.ToString() + "]", w + entry.Substring(0, 2));      //dòng 7
+                                            dictionaryCharacter.Add("[" + code.ToString() + "]", w + entry.Substring(0, 2));      //dòng 7
                                         }
                                         else
                                         {
-                                            dictionaryCharacter.Add("[" + numberOfCode.ToString() + "]", w + entry.Substring(0, 1));    //dòng 7
+                                            dictionaryCharacter.Add("[" + code.ToString() + "]", w + entry.Substring(0, 1));    //dòng 7
                                         }
-                                        numberOfCode++;
+                                        code++;
                                         w = entry;   //dòng 8
                                         index = a; //tăng index lên bằng với a
                                         break;
@@ -192,8 +191,8 @@ namespace MultimediaProject.Services.LZW
                                             entry = w + w.Substring(0, 1);
                                         }
                                         output.Add(entry); //dòng 10.1
-                                        dictionaryCharacter.Add("[" + numberOfCode.ToString() + "]", entry);
-                                        numberOfCode++;
+                                        dictionaryCharacter.Add("[" + code.ToString() + "]", entry);   //dòng11
+                                        code++;
                                         w = entry;    //dòng 12
                                         index = a; //tăng index lên bằng với a
                                         break;
